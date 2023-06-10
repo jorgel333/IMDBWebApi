@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\IMDBWebApi.Application\IMDBWebApi.Application.csproj" />
+    <ProjectReference Include="..\IMDBWebApi.Domain\IMDBWebApi.Domain.csproj" />
+    <ProjectReference Include="..\IMDBWebApi.Infra.Database\IMDBWebApi.Infra.Database.csproj" />
+  </ItemGroup>
+
 </Project>

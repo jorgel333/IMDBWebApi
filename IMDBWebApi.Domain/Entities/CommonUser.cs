@@ -10,5 +10,7 @@ namespace IMDBWebApi.Domain.Entities
     public sealed class CommonUser : Account
     {
         public IEnumerable<AssessmentRecord>? Assessments { get; set; }
+
+        
     }
 }

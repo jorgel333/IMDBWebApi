@@ -8,11 +8,16 @@ namespace IMDBWebApi.Domain.Entities.Abstract
 {
     public abstract class Account : Entity
     {
-        public string? Name { get; set; }
-        public string? Email { get; set; }
-        public string? Password { get; set; }
-        public DateTime Birthday { get; set; }
-        public string? NickName { get; set; }
-        public bool IsDeleted { get; set; }
+        public string? Name { get; private set; }
+        public string? Email { get; private set; }
+        public string? Password { get; private set; }
+        public DateTime Birthday { get; private set; }
+        public string? NickName { get; private set; }
+        public bool IsDeleted { get; private set; }
+
+        public void SoftDelete()
+        {
+            IsDeleted = true;
+        }
     }
 }
