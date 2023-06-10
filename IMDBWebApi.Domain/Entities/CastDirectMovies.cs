@@ -2,7 +2,7 @@
 
 namespace IMDBWebApi.Domain.Entities
 {
-    public class CastDirectMovies : Entity
+    public sealed class CastDirectMovies : Entity
     {
         public Guid MovieId { get; set; }
         public Movie? DitectorMovie { get; set; }
