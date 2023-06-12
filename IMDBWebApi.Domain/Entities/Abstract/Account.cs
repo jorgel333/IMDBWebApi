@@ -52,7 +52,7 @@ namespace IMDBWebApi.Domain.Entities.Abstract
 
             DomainExceptionValidation.When(password.Length < 6, "Invalid, minimum 8 characters");
             
-            DomainExceptionValidation.When(password.Length > 32, "Invalid, maximum 32 characters");
+            DomainExceptionValidation.When(password.Length > 42, "Invalid, maximum 42 characters");
 
             DomainExceptionValidation.When(birthday > DateTime.Now, "Invalid release date value!");
 

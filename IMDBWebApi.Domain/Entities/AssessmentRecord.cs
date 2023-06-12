@@ -1,10 +1,5 @@
 ﻿using IMDBWebApi.Domain.Entities.Abstract;
-using IMDBWebApi.Domain.Validation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using IMDBWebApi.Domain.Validation;s;
 
 namespace IMDBWebApi.Domain.Entities
 {
@@ -30,7 +25,7 @@ namespace IMDBWebApi.Domain.Entities
         private void ValidateDomain(int rate)
         {
             DomainExceptionValidation.When(rate < 0, "Rating cannot be lees than 0");
-            DomainExceptionValidation.When(rate > 5, "Rating cannot be greather than 5");
+            DomainExceptionValidation.When(rate > 10, "Rating cannot be greather than 5");
 
             Rate = rate;
         }

@@ -15,7 +15,7 @@ namespace IMDBWebApi.Domain.Entities
         public IEnumerable<AssessmentRecord>? Assessments { get; set; }
         public IEnumerable<CastActMovies>? ActorMovies { get; set; }
         public IEnumerable<CastDirectMovies>? DirectorMovies { get; set; }
-        public IEnumerable<GenreMovies>? Genres { get; set; }
+        public IEnumerable<GenreMovies>? GenresMovies { get; set; }
 
         public Movie(string name, string description, int duration, 
             string image, DateTime releaseDate)
@@ -36,17 +36,17 @@ namespace IMDBWebApi.Domain.Entities
         private void ValidateDomain(string name, string description, int duration,
              string image, DateTime releaseDate)
         {
-            DomainExceptionValidation.When(string.IsNullOrWhiteSpace(name)
-                                            , "Invalid. Name is required!");
+            DomainExceptionValidation.When(string.IsNullOrWhiteSpace(name), "Invalid. Name is required!");
 
             DomainExceptionValidation.When(name.Length < 3, "Invalid. minimum 3 characters");
 
-            DomainExceptionValidation.When(string.IsNullOrWhiteSpace(description)
-                                            , "Invalid. Descripition is required!");
+            DomainExceptionValidation.When(string.IsNullOrWhiteSpace(description), "Invalid. Descripition is required!");
 
-            DomainExceptionValidation.When(description.Length < 20, "Invalid. minimum 20 characters");
+            DomainExceptionValidation.When(description.Length < 20, "Invalid. Description minimum 20 characters");
+            
+            DomainExceptionValidation.When(description.Length > 500, "Invalid. Description maximum 500 characters");
 
-            DomainExceptionValidation.When(duration < 0 , "Invalid duration value!");
+            DomainExceptionValidation.When(duration <= 0 , "Invalid duration value!");
 
             DomainExceptionValidation.When(image.Length > 250, "Invalid, maximum 20 characters!");
 
