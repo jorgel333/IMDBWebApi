@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IMDBWebApi.Domain.Entities.Abstract
+namespace IMDBWebApi.Domain.Interfaces.Repositories
 {
-    public abstract class Entity
+    public class ICastRepository
     {
-        public int Id { get; protected set; }
     }
 }

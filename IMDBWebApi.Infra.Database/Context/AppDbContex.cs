@@ -8,6 +8,7 @@ namespace IMDBWebApi.Infra.Database.Context
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
+
         public DbSet<Administrator> Administrators { get; set; }
         public DbSet<CommonUser> CommonUsers { get; set; }
         public DbSet<Movie> Movies { get; set; }
@@ -15,5 +16,7 @@ namespace IMDBWebApi.Infra.Database.Context
         public DbSet<Cast> Cast { get; set; }
         public DbSet<CastActMovies> CastActMovies { get; set; }
         public DbSet<CastDirectMovies> CastDirectMovies { get; set; }
+        public DbSet<Genre> Genres { get; set; }
+        public DbSet<GenreMovies> GenreMovies { get; set; }
     }
 }

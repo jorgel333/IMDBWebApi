@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using IMDBWebApi.Domain.Entities.Abstract;
+﻿using IMDBWebApi.Domain.Entities.Abstract;
 using IMDBWebApi.Domain.Validation;
 
 namespace IMDBWebApi.Domain.Entities
@@ -20,6 +15,7 @@ namespace IMDBWebApi.Domain.Entities
         public IEnumerable<AssessmentRecord>? Assessments { get; set; }
         public IEnumerable<CastActMovies>? ActorMovies { get; set; }
         public IEnumerable<CastDirectMovies>? DirectorMovies { get; set; }
+        public IEnumerable<GenreMovies>? Genres { get; set; }
 
         public Movie(string name, string description, int duration, 
             string image, DateTime releaseDate)
@@ -30,11 +26,7 @@ namespace IMDBWebApi.Domain.Entities
         }
         public void Update(string name, string description, int duration, string image, DateTime releaseDate)
         {
-            Name = name;
-            Description = description;
-            Duration = duration;
-            Image = image;
-            ReleaseDate = releaseDate;
+            ValidateDomain(name, description, duration, image, releaseDate);
         }
         public void AttRatingAverage()
         {
