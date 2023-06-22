@@ -7,15 +7,16 @@ namespace IMDBWebApi.Domain.Entities.Abstract
         public string? Name { get; protected set; }
         public string? UserName { get; protected set; }
         public string? Email { get; protected set; }
-        public string? Password { get; protected set; }
+        public byte[]? PasswordHashSalt { get; protected set; }
+        public byte[]? PasswordSalt { get; protected set; }
         public DateTime Birthday { get; protected set; }
         public bool IsDeleted { get; protected set; }
 
 
-        protected Account(string name, string userName, string email, string password, 
-            DateTime birthday)
+        protected Account(string name, string userName, string email, byte[] passwordHashSalt,
+            byte [] passwordSalt, DateTime birthday)
         {
-            ValidateDomain(name, userName, email, password, birthday);
+            ValidateDomain(name, userName, email, passwordHashSalt, passwordSalt, birthday);
             IsDeleted = false;
         }
 
@@ -24,13 +25,14 @@ namespace IMDBWebApi.Domain.Entities.Abstract
             IsDeleted = true;
         }
 
-        public void Update(string name, string userName, string email, string password,
-            DateTime birthday)
+        public void Update(string name, string userName, string email, byte[] passwordHashSalt,
+            byte [] passwordSalt, DateTime birthday)
         {
-            ValidateDomain(name, userName, email, password, birthday);
+            ValidateDomain(name, userName, email, passwordHashSalt, passwordSalt, birthday);
         }
 
-        protected void ValidateDomain(string name, string userName, string email, string password, DateTime birthday)
+        protected void ValidateDomain(string name, string userName, string email, 
+            byte [] passwordHashSalt, byte [] passwordSalt,  DateTime birthday)
         {
             DomainExceptionValidation.When(string.IsNullOrWhiteSpace(name)
                                             , "Invalid. Name is required!");
@@ -47,19 +49,19 @@ namespace IMDBWebApi.Domain.Entities.Abstract
 
             DomainExceptionValidation.When(email.Length > 250, "Invalid. minimum 20 characters");
 
-            DomainExceptionValidation.When(string.IsNullOrWhiteSpace(password)
+            DomainExceptionValidation.When(passwordHashSalt.Length <= 0
                                             , "Invalid. Password is required!");
 
-            DomainExceptionValidation.When(password.Length < 6, "Invalid, minimum 8 characters");
-            
-            DomainExceptionValidation.When(password.Length > 42, "Invalid, maximum 42 characters");
+            DomainExceptionValidation.When(passwordSalt.Length <= 0
+                                            , "Invalid. Password is required!");
 
             DomainExceptionValidation.When(birthday > DateTime.Now, "Invalid release date value!");
 
             Name = name;
             UserName = userName;
             Email = email;
-            Password = password;
+            PasswordHashSalt = passwordHashSalt;
+            PasswordSalt = passwordSalt;
             Birthday = birthday;
         }
     }

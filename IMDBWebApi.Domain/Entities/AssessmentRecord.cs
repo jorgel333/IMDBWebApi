@@ -1,5 +1,5 @@
 ﻿using IMDBWebApi.Domain.Entities.Abstract;
-using IMDBWebApi.Domain.Validation;s;
+using IMDBWebApi.Domain.Validation;
 
 namespace IMDBWebApi.Domain.Entities
 {

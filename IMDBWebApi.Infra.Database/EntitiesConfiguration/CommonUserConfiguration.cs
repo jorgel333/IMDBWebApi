@@ -10,13 +10,19 @@ namespace IMDBWebApi.Infra.Database.EntitiesConfiguration
         {
             builder.HasKey(c => c.Id);
 
+            builder.HasIndex(c => c.UserName).IsUnique();
+
+            builder.HasIndex(c => c.Email).IsUnique();
+
             builder.Property(c => c.Name).IsRequired().HasMaxLength(50);
 
             builder.Property(c => c.UserName).IsRequired().HasMaxLength(24);
 
             builder.Property(c => c.Email).IsRequired().HasMaxLength(250);
 
-            builder.Property(c => c.Password).IsRequired().HasMaxLength(42);
+            builder.Property(c => c.PasswordHashSalt).IsRequired().HasMaxLength(32);
+
+            builder.Property(c => c.PasswordSalt).IsRequired().HasMaxLength(12);
 
             builder.Property(c => c.IsDeleted).IsRequired().HasDefaultValue(false);
 
