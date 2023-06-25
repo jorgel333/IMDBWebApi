@@ -20,21 +20,22 @@ namespace IMDBWebApi.Domain.Entities
         public Movie(string name, string description, int duration, 
             string image, DateTime releaseDate)
         {
-            ValidateDomain(name, description, duration, image, releaseDate);
+            ValidateDomain(name, description, duration, image);
+            ReleaseDate = releaseDate;
             RatingAverage = 0;
             TotalVotes = 0;
         }
         public void Update(string name, string description, int duration, string image, DateTime releaseDate)
         {
-            ValidateDomain(name, description, duration, image, releaseDate);
+            ValidateDomain(name, description, duration, image);
+            ReleaseDate = releaseDate;
         }
         public void AttRatingAverage()
         {
             TotalVotes++;
             RatingAverage = Assessments!.Select(x => x.Rate).Average();
         }
-        private void ValidateDomain(string name, string description, int duration,
-             string image, DateTime releaseDate)
+        private void ValidateDomain(string name, string description, int duration, string image)
         {
             DomainExceptionValidation.When(string.IsNullOrWhiteSpace(name), "Invalid. Name is required!");
 
@@ -50,13 +51,10 @@ namespace IMDBWebApi.Domain.Entities
 
             DomainExceptionValidation.When(image.Length > 250, "Invalid, maximum 20 characters!");
 
-            DomainExceptionValidation.When(releaseDate > DateTime.Now, "Invalid release date value!");
-
             Name = name;
             Description = description;
             Duration = duration;
             Image = image;
-            ReleaseDate = releaseDate;
         }
     }
 }
