@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace IMDBWebApi.Infra.Database.EntitiesConfiguration
 {
-    public class AdministratorConfiguration : IEntityTypeConfiguration<Administrator>
+    public class AdministratorConfiguration : IEntityTypeConfiguration<Admin>
     {
-        public void Configure(EntityTypeBuilder<Administrator> builder)
+        public void Configure(EntityTypeBuilder<Admin> builder)
         {
             builder.HasKey(a => a.Id);
 

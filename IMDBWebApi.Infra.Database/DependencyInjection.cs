@@ -1,4 +1,5 @@
-﻿using IMDBWebApi.Domain.Interfaces.Repositories;
+﻿using IMDBWebApi.Domain.Interfaces;
+using IMDBWebApi.Domain.Interfaces.Repositories;
 using IMDBWebApi.Infra.Database.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,6 +15,12 @@ namespace IMDBWebApi.Infra.Database
             services.AddScoped<IAssessmentRecordRepository, AssessmentRecordRepository>();
             services.AddScoped<IGenreRepository, GenreRepository>();
             services.AddScoped<ICastRepository, CastRepository>();
+            return services;
+        }
+
+        public static IServiceCollection AddUnityOfWork(this IServiceCollection services)
+        {
+            services.AddScoped<IUnityOfWork, UnityOfWork>();
             return services;
         }
     }

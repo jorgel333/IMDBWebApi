@@ -13,7 +13,7 @@ namespace IMDBWebApi.Domain.Entities.Abstract
         public bool IsDeleted { get; protected set; }
 
 
-        protected Account(string name, string userName, string email, byte[] passwordHashSalt,
+        public Account(string name, string userName, string email, byte[] passwordHashSalt,
             byte [] passwordSalt, DateTime birthday)
         {
             ValidateDomain(name, userName, email, passwordHashSalt, passwordSalt, birthday);
@@ -25,10 +25,14 @@ namespace IMDBWebApi.Domain.Entities.Abstract
             IsDeleted = true;
         }
 
-        public void Update(string name, string userName, string email, byte[] passwordHashSalt,
-            byte [] passwordSalt, DateTime birthday)
+        public void UpdateRegistrationData(string name, string userName, string email, DateTime birthday)
         {
-            ValidateDomain(name, userName, email, passwordHashSalt, passwordSalt, birthday);
+            ValidateUpdate(name, userName, email, birthday);
+        }
+
+        public void UpdatePassword(byte[] passwordHashSalt, byte[] passwordSalt)
+        {
+            ValidateUpdatePassword(passwordHashSalt, passwordSalt);
         }
 
         protected void ValidateDomain(string name, string userName, string email, 
@@ -63,6 +67,41 @@ namespace IMDBWebApi.Domain.Entities.Abstract
             PasswordHashSalt = passwordHashSalt;
             PasswordSalt = passwordSalt;
             Birthday = birthday;
+        }
+        protected void ValidateUpdate(string name, string userName, string email, DateTime birthday)
+        {
+            DomainExceptionValidation.When(string.IsNullOrWhiteSpace(name)
+                                            , "Invalid. Name is required!");
+
+            DomainExceptionValidation.When(name.Length < 3, "Invalid. minimum 3 characters");
+
+            DomainExceptionValidation.When(string.IsNullOrWhiteSpace(userName)
+                                            , "Invalid. User name is required!");
+
+            DomainExceptionValidation.When(userName.Length < 3, "Invalid. minimum 3 characters");
+
+            DomainExceptionValidation.When(string.IsNullOrWhiteSpace(email)
+                                            , "Invalid. Email is required!");
+
+            DomainExceptionValidation.When(email.Length > 250, "Invalid. minimum 20 characters");
+
+            DomainExceptionValidation.When(birthday > DateTime.Now, "Invalid release date value!");
+
+            Name = name;
+            UserName = userName;
+            Email = email;
+            Birthday = birthday;
+        }
+        protected void ValidateUpdatePassword(byte[] passwordHashSalt, byte[] passwordSalt)
+        {
+            DomainExceptionValidation.When(passwordHashSalt.Length <= 0
+                                           , "Invalid. Password is required!");
+
+            DomainExceptionValidation.When(passwordSalt.Length <= 0
+                                            , "Invalid. Password is required!");
+
+            PasswordHashSalt = passwordHashSalt;
+            PasswordSalt = passwordSalt;
         }
     }
 }

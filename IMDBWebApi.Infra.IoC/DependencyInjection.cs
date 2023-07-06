@@ -18,6 +18,7 @@ namespace IMDBWebApi.Infra.IoC
             b => b.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)));
 
             services.AddRepositories();
+            services.AddUnityOfWork();
             services.AddServices();
             return services;
         }

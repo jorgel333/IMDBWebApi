@@ -12,22 +12,22 @@ namespace IMDBWebApi.Infra.Database.Repositories
         {
             _context = context;
         }
-        public void CreateAdm(Administrator admin)
+        public void CreateAdm(Admin admin)
             => _context.Administrators.Add(admin);
 
-        public IQueryable<Administrator> GetAllAdm() 
+        public IQueryable<Admin> GetAllAdm() 
             => _context.Administrators.AsNoTracking();
 
-        public async Task<Administrator?> GetByIdAsync(int id, CancellationToken ct) 
+        public async Task<Admin?> GetByIdAsync(int id, CancellationToken ct) 
             => await _context.Administrators.SingleOrDefaultAsync(adm => adm.Id == id, ct);
 
         public async Task<bool> IsUniqueEmail(string email, CancellationToken ct)
-            => await _context.Administrators.AnyAsync(adm => adm.Email!.ToLower() == email.ToLower(), ct) is false;
+            => await _context.Administrators.AnyAsync(adm => adm.Email!.ToLower() == email.ToLower(), ct);
 
         public async Task<bool> IsUniqueUserName(string userName, CancellationToken ct)
-            => await _context.Administrators.AnyAsync(adm => adm.UserName!.ToLower() == userName.ToLower(), ct) is false;
+            => await _context.Administrators.AnyAsync(adm => adm.UserName!.ToLower() == userName.ToLower(), ct);
 
-        public void Update(Administrator admin)
+        public void Update(Admin admin)
             => _context.Administrators.Update(admin);
     }
 }
