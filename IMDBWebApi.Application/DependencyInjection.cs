@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using IMDBWebApi.Application.Services.Cryptography;
+using Microsoft.Extensions.DependencyInjection;
+using IMDBWebApi.Application.Services.Token;
 using IMDBWebApi.Application.Behaviours;
 using MediatR;
 
@@ -11,6 +13,12 @@ public static class DependencyInjection
         services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
 
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(SetUserInfoBehaviour<,>));
+
+        services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<ICryptography, Cryptography>();
+
         return services;
     }
+
+    
 }

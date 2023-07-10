@@ -19,13 +19,7 @@ namespace IMDBWebApi.Infra.IoC
 
             services.AddRepositories();
             services.AddUnityOfWork();
-            services.AddServices();
-            return services;
-        }
-
-        public static IServiceCollection AddServices(this IServiceCollection services)
-        {
-            services.AddScoped<ICryptography, Cryptography>();
+            services.AddApplication();
             return services;
         }
     }

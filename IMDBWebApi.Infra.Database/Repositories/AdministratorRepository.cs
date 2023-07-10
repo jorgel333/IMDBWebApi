@@ -22,10 +22,10 @@ namespace IMDBWebApi.Infra.Database.Repositories
             => await _context.Administrators.SingleOrDefaultAsync(adm => adm.Id == id, ct);
 
         public async Task<bool> IsUniqueEmail(string email, CancellationToken ct)
-            => await _context.Administrators.AnyAsync(adm => adm.Email!.ToLower() == email.ToLower(), ct);
+            => await _context.Administrators.AnyAsync(adm => adm.Email!.ToLower() == email.ToLower(), ct) is false;
 
         public async Task<bool> IsUniqueUserName(string userName, CancellationToken ct)
-            => await _context.Administrators.AnyAsync(adm => adm.UserName!.ToLower() == userName.ToLower(), ct);
+            => await _context.Administrators.AnyAsync(adm => adm.UserName!.ToLower() == userName.ToLower(), ct) is false;
 
         public void Update(Admin admin)
             => _context.Administrators.Update(admin);

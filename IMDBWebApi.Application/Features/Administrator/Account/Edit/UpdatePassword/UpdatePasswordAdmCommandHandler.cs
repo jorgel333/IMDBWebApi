@@ -5,7 +5,7 @@ using IMDBWebApi.Domain.Interfaces;
 using FluentResults;
 using MediatR;
 
-namespace IMDBWebApi.Application.Features.Administrator.Account.UpdatePassword;
+namespace IMDBWebApi.Application.Features.Administrator.Account.Edit.UpdatePassword;
 
 public class UpdatePasswordAdmCommandHandler : IRequestHandler<UpdatePasswordAdmCommand, Result>
 {
@@ -14,7 +14,7 @@ public class UpdatePasswordAdmCommandHandler : IRequestHandler<UpdatePasswordAdm
     private readonly ICryptography _cryptography;
     private readonly IUserInfo _userInfo;
 
-    public UpdatePasswordAdmCommandHandler(IAdministratorRepository admRepository, 
+    public UpdatePasswordAdmCommandHandler(IAdministratorRepository admRepository,
         IUnityOfWork unityOfWork, ICryptography cryptography, IUserInfo userInfo)
     {
         _admRepository = admRepository;
@@ -28,11 +28,11 @@ public class UpdatePasswordAdmCommandHandler : IRequestHandler<UpdatePasswordAdm
         var adm = await _admRepository.GetByIdAsync(_userInfo.Id, cancellationToken);
 
         if (adm is null)
-            return Result.Fail("User doesn't exist.");
+            return Result.Fail("Admin doesn't exist.");
+
         if (request.Password != request.ConfirmPassword)
             return Result.Fail("Different passwords");
-        if (string.IsNullOrWhiteSpace(request.Password))
-            return Result.Fail("Password Empty");
+
 
         var salt = _cryptography.CreateSalt();
         var passwordHash = _cryptography.CryptographyPassword(request.Password, salt);

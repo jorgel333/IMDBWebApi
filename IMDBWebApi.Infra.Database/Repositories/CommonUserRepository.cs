@@ -13,7 +13,7 @@ namespace IMDBWebApi.Infra.Database.Repositories
             _context = context;
         }
 
-        public void CreateAdm(CommonUser user) 
+        public void Create(CommonUser user) 
             => _context.CommonUsers.Add(user);
 
         //public async Task<IEnumerable<Movie>> NextReleases()
@@ -32,10 +32,10 @@ namespace IMDBWebApi.Infra.Database.Repositories
             => await _context.CommonUsers.SingleOrDefaultAsync(user => user.Id == id, ct);
 
         public async Task<bool> IsUniqueEmail(string email, CancellationToken ct)
-            => await _context.CommonUsers.AnyAsync(user => user.Email == email, ct) is false;
+            => await _context.CommonUsers.AnyAsync(user => user.Email!.ToLower() == email.ToLower(), ct) is false;
 
         public async Task<bool> IsUniqueUserName(string userName, CancellationToken ct)
-            => await _context.CommonUsers.AnyAsync(user => user.UserName == userName, ct) is false;
+            => await _context.CommonUsers.AnyAsync(user => user.UserName!.ToLower() == userName.ToLower(), ct) is false;
 
         public void Update(CommonUser user)
             => _context.CommonUsers.Update(user);
