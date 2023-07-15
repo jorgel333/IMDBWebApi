@@ -4,9 +4,9 @@ namespace IMDBWebApi.Domain.Entities
 {
     public sealed class CastActMovies : Entity
     {
-        public int MovieActId { get; private set; }
-        public Movie? MovieAct { get; private set; }
-        public int CastActId { get; private set; }
-        public Cast? CastAct { get; private set; }
+        public int MovieActId { get; set; }
+        public Movie? MovieAct { get; set; }
+        public int CastActId { get; set; }
+        public Cast? CastAct { get; set; }
     }
 }

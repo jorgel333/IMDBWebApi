@@ -18,14 +18,19 @@ namespace IMDBWebApi.Infra.Database.Repositories
         public IQueryable<Admin> GetAllAdm() 
             => _context.Administrators.AsNoTracking();
 
-        public async Task<Admin?> GetByIdAsync(int id, CancellationToken ct) 
-            => await _context.Administrators.SingleOrDefaultAsync(adm => adm.Id == id, ct);
+        public async Task<Admin?> GetByEmailAsync(string email, CancellationToken cancellatioToken) 
+            => await _context.Administrators.SingleOrDefaultAsync(adm => adm.Email!.ToLower() == email.ToLower(), cancellatioToken);
 
-        public async Task<bool> IsUniqueEmail(string email, CancellationToken ct)
-            => await _context.Administrators.AnyAsync(adm => adm.Email!.ToLower() == email.ToLower(), ct) is false;
+        public async Task<Admin?> GetByIdAsync(int id, CancellationToken cancellatioToken) 
+            => await _context.Administrators.SingleOrDefaultAsync(adm => adm.Id == id, cancellatioToken);
 
-        public async Task<bool> IsUniqueUserName(string userName, CancellationToken ct)
-            => await _context.Administrators.AnyAsync(adm => adm.UserName!.ToLower() == userName.ToLower(), ct) is false;
+        public async Task<bool> IsUniqueEmail(string email, CancellationToken cancellatioToken)
+            => await _context.Administrators.AnyAsync(adm => adm.Email!.ToLower() == email.ToLower(),
+                cancellatioToken) is false;
+
+        public async Task<bool> IsUniqueUserName(string userName, CancellationToken cancellatioToken)
+            => await _context.Administrators.AnyAsync(adm => adm.UserName!.ToLower() == userName.ToLower(),
+                cancellatioToken) is false;
 
         public void Update(Admin admin)
             => _context.Administrators.Update(admin);

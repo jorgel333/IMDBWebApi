@@ -16,10 +16,6 @@ namespace IMDBWebApi.Infra.Database.Repositories
         public void Create(CommonUser user) 
             => _context.CommonUsers.Add(user);
 
-        //public async Task<IEnumerable<Movie>> NextReleases()
-        //    => await _context.Movies.Where(mv => mv.ReleaseDate > DateTime.Today)
-        //    .GroupBy(mv => mv.ReleaseDate)
-        //    .SelectMany(group => new { RealeseDate = group.Key, Movies = group.ToList()});
 
         public async Task<IEnumerable<CommonUser>> GetAllActive(CancellationToken ct)
             => await _context.CommonUsers.Where(user => user.IsDeleted == false).ToListAsync(ct);

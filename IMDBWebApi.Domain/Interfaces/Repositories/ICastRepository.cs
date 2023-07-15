@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace IMDBWebApi.Domain.Interfaces.Repositories
 {
-    public class ICastRepository
+    public interface ICastRepository
     {
+        Task<bool> IsAlreadyRegistred(IEnumerable<int> castsId, CancellationToken cancellationToken);
     }
 }

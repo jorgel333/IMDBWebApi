@@ -17,10 +17,13 @@ namespace IMDBWebApi.Domain.Entities
         public IEnumerable<CastDirectMovies>? DirectorMovies { get; set; }
         public IEnumerable<GenreMovies>? GenresMovies { get; set; }
 
-        public Movie(string name, string description, int duration, 
-            string image, DateTime releaseDate)
+        public Movie(string name, string description, int duration, string image, DateTime releaseDate,
+            IEnumerable<GenreMovies> genreMovies, IEnumerable<CastActMovies> actMovies, IEnumerable<CastDirectMovies> directMovies)
         {
             ValidateDomain(name, description, duration, image);
+            ActorMovies = actMovies;
+            DirectorMovies = directMovies;
+            GenresMovies = genreMovies;
             ReleaseDate = releaseDate;
             RatingAverage = 0;
             TotalVotes = 0;

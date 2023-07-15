@@ -17,10 +17,10 @@ namespace IMDBWebApi.Application.Services.Cryptography
             return buff;
         }
 
-        public bool VerifyPassword(byte[] originalHash, byte[] originalSalt, string plainText)
+        public bool VerifyPassword(byte[] originalHashSalt, byte[] originalSalt, string plainText)
         {
             var plainTextHash = CryptographyPassword(plainText, originalSalt);
-            return plainTextHash.SequenceEqual(originalHash);
+            return plainTextHash.SequenceEqual(originalHashSalt);
         }
     }
 }

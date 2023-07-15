@@ -29,5 +29,14 @@ namespace IMDBWebApi.Infra.Database.Repositories
 
         public async Task<bool> IsUniqueGenre(string name, CancellationToken ct)
             => await _context.Genres.AnyAsync(n => n.Name!.ToLower() == name.ToLower(), ct);
+
+        public async Task<bool> IsAlreadyRegistred(IEnumerable<int> genresId, CancellationToken cancellationToken)
+        {
+            var existingGenresIds = await _context.Genres.Select(c => c.Id).ToListAsync(cancellationToken);
+            return genresId.ToHashSet().IsSubsetOf(existingGenresIds);
+        }
+
+        public async Task<bool> IsUniqueName(string name, CancellationToken cancellatioToken)
+            => await _context.Genres.AnyAsync(genre => genre.Name!.ToLower() == name.ToLower(), cancellatioToken) is false;
     }
 }
