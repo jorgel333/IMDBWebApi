@@ -15,6 +15,8 @@ namespace IMDBWebApi.Infra.Database.EntitiesConfiguration
         {
             builder.HasKey(c => c.Id);
 
+            builder.HasIndex(g => g.Name).IsUnique();
+
             builder.Property(c => c.Name).IsRequired().HasMaxLength(50);
 
             builder.Property(c => c.Description).IsRequired().HasMaxLength(350);

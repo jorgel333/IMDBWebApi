@@ -39,12 +39,17 @@ public class AddMovieCommandHandler : IRequestHandler<AddMovieCommand, Result<Ad
 
         var directorMovies = request.CastActor.Select(cast => new CastDirectMovies { CastDirectorId = cast });
 
-        var newMovie = new Movie(request.Name, request.Description, request.Duration, request.Image,
-                                request.RealiseDate, genresMovies, actorMovies, directorMovies);
+        var newMovie = new Movie(request.Name, request.Description,
+            request.Duration, request.Image, request.RealiseDate)
+        {
+            DirectorMovies = directorMovies, 
+            GenresMovies = genresMovies,
+            ActorMovies = actorMovies
+        };
 
         _movieRepository.Create(newMovie);
         await _unityOfWork.SaveChangesAsync(cancellationToken);
-
+        
         return Result.Ok(new AddMovieCommandResponse(newMovie.Id));
     }
 }

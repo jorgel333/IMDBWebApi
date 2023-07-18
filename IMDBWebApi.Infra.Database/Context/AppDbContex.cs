@@ -8,7 +8,7 @@ namespace IMDBWebApi.Infra.Database.Context
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
-
+        
         public DbSet<Admin> Administrators { get; set; }
         public DbSet<CommonUser> CommonUsers { get; set; }
         public DbSet<Movie> Movies { get; set; }

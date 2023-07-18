@@ -59,7 +59,7 @@ namespace IMDBWebApi.Domain.Entities.Abstract
             DomainExceptionValidation.When(passwordSalt.Length <= 0
                                             , "Invalid. Password is required!");
 
-            DomainExceptionValidation.When(birthday > DateTime.Now, "Invalid release date value!");
+            DomainExceptionValidation.When(birthday > DateTime.Today, "Invalid release date value!");
 
             Name = name;
             UserName = userName;

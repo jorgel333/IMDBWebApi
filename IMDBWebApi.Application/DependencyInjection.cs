@@ -12,7 +12,7 @@ public static class DependencyInjection
     {
         services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
 
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(SetUserInfoBehaviour<,>));
+        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(SetUserInfoBehaviour<,>));
         
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<ICryptography, Cryptography>();

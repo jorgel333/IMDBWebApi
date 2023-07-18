@@ -53,8 +53,14 @@ namespace IMDBWebApi.Infra.Database.Repositories
             return filterMovies;
         }
 
+        public async Task<Movie?> GetDetailsById(int id, CancellationToken cancellationToken)
+            => await _context.Movies.Include(x => x.GenresMovies!).ThenInclude(g => g.Genre!)
+            .Include(x => x.ActorMovies!).ThenInclude(a => a.CastAct!)
+            .Include(x => x.DirectorMovies!).ThenInclude(d => d.CastDirector!)
+            .SingleOrDefaultAsync(m => m.Id == id, cancellationToken);
+
         public async Task<Movie?> GetById(int id, CancellationToken cancellationToken)
-            => await _context.Movies.SingleOrDefaultAsync(m => m.Id == id, cancellationToken);
+            => await _context.Movies.Include(x => x.GenresMovies).SingleOrDefaultAsync(m => m.Id == id, cancellationToken);
 
         public async Task<IEnumerable<Movie>> GetTop250(CancellationToken cancellationToken)
             => await _context.Movies.OrderByDescending(mv => mv.RatingAverage)

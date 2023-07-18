@@ -10,6 +10,8 @@ namespace IMDBWebApi.Infra.Database.EntitiesConfiguration
         {
             builder.HasKey(g => g.Id);
 
+            builder.HasIndex(g => g.Name).IsUnique();
+
             builder.HasMany(g => g.GenreMovies).WithOne(g => g.Genre).HasForeignKey(g => g.GenreId);
         }
     }

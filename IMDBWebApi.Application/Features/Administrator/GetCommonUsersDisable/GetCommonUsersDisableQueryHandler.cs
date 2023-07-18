@@ -1,8 +1,7 @@
 ﻿using IMDBWebApi.Application.Features.Administrator.GetUsersDisable;
+using IMDBWebApi.Domain.Interfaces.Repositories;
 using FluentResults;
 using MediatR;
-using IMDBWebApi.Domain.Interfaces.Repositories;
-using IMDBWebApi.Domain.Interfaces;
 
 namespace IMDBWebApi.Application.Features.Administrator.GetCommonUsersDisable;
 
@@ -22,8 +21,7 @@ public class GetCommonUsersDisableQueryHandler : IRequestHandler<GetCommonUsersD
         if (!inactiveUsers.Any())
             return Result.Ok(Enumerable.Empty<GetCommonUsersDisableQueryResponse>());
 
-        return Result.Ok(inactiveUsers.Select(u => new GetCommonUsersDisableQueryResponse(u.Id, u.Name!,
-            u.UserName!, u.Email!)));
+        return Result.Ok(inactiveUsers.Select(u => new GetCommonUsersDisableQueryResponse(u.Id, u.Name!, u.UserName!, u.Email!)));
 
     }
 }

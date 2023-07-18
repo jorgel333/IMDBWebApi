@@ -1,4 +1,5 @@
 using IMDBWebApi.Infra.IoC;
+using IMDBWebApi.Presentation.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
 builder.Services.AddInfraStructure(builder.Configuration);
+builder.Services.AddAuth();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
