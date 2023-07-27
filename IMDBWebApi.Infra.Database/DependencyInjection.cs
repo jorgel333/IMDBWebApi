@@ -10,7 +10,7 @@ namespace IMDBWebApi.Infra.Database
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             services.AddScoped<IAdministratorRepository, AdministratorRepository>();
-            services.AddScoped<ICommonUserRepository, CommonUserRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IMovieRepository, MovieRepository>();
             services.AddScoped<IAssessmentRecordRepository, AssessmentRecordRepository>();
             services.AddScoped<IGenreRepository, GenreRepository>();

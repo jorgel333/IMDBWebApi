@@ -1,6 +1,7 @@
 ﻿namespace IMDBWebApi.Application.Features.MoviesManagment.GetMovieDetails;
 
-public record GetMovieDetailsQueryResponse(int Id,
+public record GetMovieDetailsQueryResponse(
+    int MovieId,
     string Name,
     string Description,
     int Duration,

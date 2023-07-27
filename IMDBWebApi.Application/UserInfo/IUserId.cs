@@ -1,5 +1,4 @@
-﻿
-namespace IMDBWebApi.Application.UserInfo;
+﻿namespace IMDBWebApi.Application.UserInfo;
 
 public interface IUserId
 {

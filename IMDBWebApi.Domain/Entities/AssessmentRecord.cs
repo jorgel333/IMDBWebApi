@@ -10,12 +10,14 @@ namespace IMDBWebApi.Domain.Entities
         public int MovieId { get; set; }
         public Movie? Movie { get; set; }
         public int CommonUserId { get; set; }
-        public CommonUser? CommonUser { get; set; }
+        public User? CommonUser { get; set; }
 
-        public AssessmentRecord(int rate)
+        public AssessmentRecord(int rate, int commonUserId, int movieId)
         {
             ValidateDomain(rate);
-            EvaluationDate = DateTime.Now;
+            EvaluationDate = DateTime.Today;
+            CommonUserId = commonUserId;
+            MovieId = movieId;
         }
 
         public void Update(int rate)

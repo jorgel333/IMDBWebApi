@@ -19,22 +19,27 @@ namespace IMDBWebApi.Domain.Entities
 
         public Movie(string name, string description, int duration, string image, DateTime releaseDate)
         {
-            ValidateDomain(name, description, duration, image);
+            ValidateDomain(name, description, duration);
             ReleaseDate = releaseDate;
+            Image = image;
             RatingAverage = 0;
             TotalVotes = 0;
         }
-        public void Update(string name, string description, int duration, string image, DateTime releaseDate)
+        public void Update(string name, string description, int duration, DateTime releaseDate,
+            IEnumerable<GenreMovies> genres, IEnumerable<CastActMovies> castActors, IEnumerable<CastDirectMovies> castDirectors)
         {
-            ValidateDomain(name, description, duration, image);
+            ValidateDomain(name, description, duration);
             ReleaseDate = releaseDate;
+            GenresMovies = genres;
+            ActorMovies = castActors; 
+            DirectorMovies = castDirectors;
         }
         public void AttRatingAverage()
         {
             TotalVotes++;
             RatingAverage = Assessments!.Select(x => x.Rate).Average();
         }
-        private void ValidateDomain(string name, string description, int duration, string image)
+        private void ValidateDomain(string name, string description, int duration)
         {
             DomainExceptionValidation.When(string.IsNullOrWhiteSpace(name), "Invalid. Name is required!");
 
@@ -48,12 +53,9 @@ namespace IMDBWebApi.Domain.Entities
 
             DomainExceptionValidation.When(duration <= 0 , "Invalid duration value!");
 
-            DomainExceptionValidation.When(image.Length > 250, "Invalid, maximum 20 characters!");
-
             Name = name;
             Description = description;
             Duration = duration;
-            Image = image;
         }
     }
 }

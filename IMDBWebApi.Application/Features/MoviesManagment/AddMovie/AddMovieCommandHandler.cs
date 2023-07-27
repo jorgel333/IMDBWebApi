@@ -31,13 +31,16 @@ public class AddMovieCommandHandler : IRequestHandler<AddMovieCommand, Result<Ad
             return Result.Fail("Some genre is invalid.");
 
         if (await _castRepository.IsAlreadyRegistred(request.CastActor, cancellationToken) is false)
-            return Result.Fail("Some actor doesn't exists.");
+            return Result.Fail("Some actor doesn't exists."); 
+
+        if (await _castRepository.IsAlreadyRegistred(request.CastDirector, cancellationToken) is false)
+            return Result.Fail("Some director doesn't exists.");
 
         var genresMovies = request.Genres.Select(genre => new GenreMovies { GenreId = genre });
 
         var actorMovies = request.CastActor.Select(cast => new CastActMovies { CastActId = cast });
 
-        var directorMovies = request.CastActor.Select(cast => new CastDirectMovies { CastDirectorId = cast });
+        var directorMovies = request.CastDirector.Select(cast => new CastDirectMovies { CastDirectorId = cast });
 
         var newMovie = new Movie(request.Name, request.Description,
             request.Duration, request.Image, request.RealiseDate)

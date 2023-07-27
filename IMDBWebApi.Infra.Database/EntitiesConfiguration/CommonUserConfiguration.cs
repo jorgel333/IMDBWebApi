@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace IMDBWebApi.Infra.Database.EntitiesConfiguration
 {
-    public class CommonUserConfiguration : IEntityTypeConfiguration<CommonUser>
+    public class CommonUserConfiguration : IEntityTypeConfiguration<User>
     {
-        public void Configure(EntityTypeBuilder<CommonUser> builder)
+        public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.HasKey(c => c.Id);
 

@@ -7,6 +7,6 @@ namespace IMDBWebApi.Domain.Interfaces.Repositories
         void Create(AssessmentRecord ar);
         void Update(AssessmentRecord ar);
         void Delete(AssessmentRecord ar);
-
+        Task<bool> IsUniqueAssessmentRecord(int commonUserId, int movieId, CancellationToken cancellationToken);
     }
 }

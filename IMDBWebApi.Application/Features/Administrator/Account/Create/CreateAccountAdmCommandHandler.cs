@@ -21,25 +21,15 @@ public class CreateAccountAdmCommandHandler : IRequestHandler<CreateAccountAdmCo
     }
     public async Task<Result<CreateAccountAdmCommandResponse>> Handle(CreateAccountAdmCommand request, CancellationToken cancellationToken)
     {
-        var anyEmailExists = await _admRepository.IsUniqueEmail(request.Email, cancellationToken);
-        var anyUserNameExists = await _admRepository.IsUniqueUserName(request.UserName, cancellationToken);
-
-        if (anyEmailExists)
-            return Result.Fail("Email already used.");
-         
-        if (anyUserNameExists)
-            return Result.Fail("UserName already used.");
-
         var salt = _cryptography.CreateSalt();
         var passwordHash = _cryptography.CryptographyPassword(request.Password, salt);
 
-        
-        var newAdm = new Admin( request.Name,
+        var newAdm = new Admin(request.Name,
                         request.UserName,
                         request.Email,
                         passwordHash,
                         salt,
-                        request.bithday);
+                        request.Bithday);
 
         _admRepository.CreateAdm(newAdm);
         await _unityOfWork.SaveChangesAsync(cancellationToken);

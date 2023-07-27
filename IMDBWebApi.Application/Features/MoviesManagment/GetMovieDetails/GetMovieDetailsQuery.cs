@@ -3,4 +3,4 @@ using MediatR;
 
 namespace IMDBWebApi.Application.Features.MoviesManagment.GetMovieDetails;
 
-public record GetMovieDetailsQuery(int Id): IRequest<Result<GetMovieDetailsQueryResponse>>;
+public record GetMovieDetailsQuery(int MovieId): IRequest<Result<GetMovieDetailsQueryResponse>>;

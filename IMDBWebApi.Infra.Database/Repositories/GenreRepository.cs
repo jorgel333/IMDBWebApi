@@ -21,14 +21,11 @@ namespace IMDBWebApi.Infra.Database.Repositories
         public void Delete(Genre genre)
             => _context.Genres.Remove(genre);
 
-        public async Task<IEnumerable<Genre>> GetAll(CancellationToken ct)
-            => await _context.Genres.OrderBy(g => g.Name).ToListAsync(ct);
+        public async Task<IEnumerable<Genre>> GetAll(CancellationToken cancellationToken)
+            => await _context.Genres.OrderBy(g => g.Name).ToListAsync(cancellationToken);
 
-        public Task<Genre?> GetById(int id, CancellationToken ct)
-            => _context.Genres.SingleOrDefaultAsync(g => g.Id == id, ct);
-
-        public async Task<bool> IsUniqueGenre(string name, CancellationToken ct)
-            => await _context.Genres.AnyAsync(n => n.Name!.ToLower() == name.ToLower(), ct);
+        public Task<Genre?> GetById(int id, CancellationToken cancellationToken)
+            => _context.Genres.SingleOrDefaultAsync(g => g.Id == id, cancellationToken);
 
         public async Task<bool> IsAlreadyRegistred(IEnumerable<int> genresId, CancellationToken cancellationToken)
         {
@@ -36,7 +33,7 @@ namespace IMDBWebApi.Infra.Database.Repositories
             return genresId.ToHashSet().IsSubsetOf(existingGenresIds);
         }
 
-        public async Task<bool> IsUniqueName(string name, CancellationToken cancellatioToken)
-            => await _context.Genres.AnyAsync(genre => genre.Name!.ToLower() == name.ToLower(), cancellatioToken) is false;
+        public async Task<bool> IsUniqueName(string genreName, CancellationToken cancellatioToken)
+            => await _context.Genres.AnyAsync(g => g.Name!.ToLower() == genreName.ToLower(), cancellatioToken) is false;
     }
 }

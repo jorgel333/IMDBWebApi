@@ -10,7 +10,7 @@ namespace IMDBWebApi.Infra.Database.Context
         }
         
         public DbSet<Admin> Administrators { get; set; }
-        public DbSet<CommonUser> CommonUsers { get; set; }
+        public DbSet<User> CommonUsers { get; set; }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<AssessmentRecord> AssessmentRecords { get; set; }
         public DbSet<Cast> Casts { get; set; }

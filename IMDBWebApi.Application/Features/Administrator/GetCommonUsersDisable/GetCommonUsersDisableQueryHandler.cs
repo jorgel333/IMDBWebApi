@@ -7,9 +7,9 @@ namespace IMDBWebApi.Application.Features.Administrator.GetCommonUsersDisable;
 
 public class GetCommonUsersDisableQueryHandler : IRequestHandler<GetCommonUsersDisableQuery, Result<IEnumerable<GetCommonUsersDisableQueryResponse>>>
 {
-    private readonly ICommonUserRepository _commonUserRepository;
+    private readonly IUserRepository _commonUserRepository;
 
-    public GetCommonUsersDisableQueryHandler(ICommonUserRepository commonUserRepository)
+    public GetCommonUsersDisableQueryHandler(IUserRepository commonUserRepository)
     {
         _commonUserRepository = commonUserRepository;
     }

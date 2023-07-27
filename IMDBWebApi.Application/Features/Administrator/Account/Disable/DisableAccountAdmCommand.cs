@@ -3,5 +3,5 @@ using MediatR;
 
 namespace IMDBWebApi.Application.Features.Administrator.Account.Disable;
 
-public record DisableAccountAdmCommand() : IRequest<Result>;
+public record DisableAccountAdmCommand(int Id) : IRequest<Result>;
 

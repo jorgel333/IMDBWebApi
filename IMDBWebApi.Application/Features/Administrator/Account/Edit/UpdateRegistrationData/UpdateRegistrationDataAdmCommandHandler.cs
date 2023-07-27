@@ -6,23 +6,21 @@ using MediatR;
 
 namespace IMDBWebApi.Application.Features.Administrator.Account.Edit.UpdateRegistrationData;
 
-public class UpdateRegistrationDataCommandHandler : IRequestHandler<UpdateRegistrationDataCommand, Result>
+public class UpdateRegistrationDataAdmCommandHandler : IRequestHandler<UpdateRegistrationDataAdmCommand, Result>
 {
     private readonly IAdministratorRepository _admRepository;
     private readonly IUnityOfWork _unityOfWork;
-    private readonly IUserInfo _userInfo;
 
-    public UpdateRegistrationDataCommandHandler(IAdministratorRepository admRepository, 
-        IUnityOfWork unityOfWork, IUserInfo userInfo)
+    public UpdateRegistrationDataAdmCommandHandler(IAdministratorRepository admRepository, 
+        IUnityOfWork unityOfWork)
     {
         _admRepository = admRepository;
         _unityOfWork = unityOfWork;
-        _userInfo = userInfo;
     }
 
-    public async Task<Result> Handle(UpdateRegistrationDataCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(UpdateRegistrationDataAdmCommand request, CancellationToken cancellationToken)
     {
-        var adm = await _admRepository.GetByIdAsync(_userInfo.Id, cancellationToken);
+        var adm = await _admRepository.GetByIdAsync(request.Id, cancellationToken);
         
         if (adm is null)
             return Result.Fail("Admin doesn't exist.");
@@ -36,7 +34,7 @@ public class UpdateRegistrationDataCommandHandler : IRequestHandler<UpdateRegist
         adm.UpdateRegistrationData(request.Name, request.UserName, request.Email, request.BirthDay);
         _admRepository.Update(adm);
         await _unityOfWork.SaveChangesAsync(cancellationToken);
+        
         return Result.Ok();
-
     }
 }

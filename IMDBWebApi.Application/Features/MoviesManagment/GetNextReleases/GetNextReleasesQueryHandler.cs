@@ -28,7 +28,7 @@ namespace IMDBWebApi.Application.Features.MoviesManagment.GetNextReleases
                 m.GenresMovies!.Select(g => g.Genre!.Name!).Take(3),
                 m.ActorMovies!.Select(a => a.CastAct!.Name!).Take(3),
                 m.DirectorMovies!.Select(d => d.CastDirector!.Name!).Take(1))
-                ).GroupBy(n => n.ReleaseDate);
+                ).GroupBy(m => m.ReleaseDate);
 
             return Result.Ok(result);
         }

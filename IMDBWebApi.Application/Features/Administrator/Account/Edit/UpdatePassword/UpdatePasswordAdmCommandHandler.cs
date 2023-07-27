@@ -12,20 +12,17 @@ public class UpdatePasswordAdmCommandHandler : IRequestHandler<UpdatePasswordAdm
     private readonly IAdministratorRepository _admRepository;
     private readonly IUnityOfWork _unityOfWork;
     private readonly ICryptography _cryptography;
-    private readonly IUserInfo _userInfo;
 
     public UpdatePasswordAdmCommandHandler(IAdministratorRepository admRepository,
-        IUnityOfWork unityOfWork, ICryptography cryptography, IUserInfo userInfo)
+        IUnityOfWork unityOfWork, ICryptography cryptography)
     {
         _admRepository = admRepository;
         _unityOfWork = unityOfWork;
         _cryptography = cryptography;
-        _userInfo = userInfo;
     }
-
     public async Task<Result> Handle(UpdatePasswordAdmCommand request, CancellationToken cancellationToken)
     {
-        var adm = await _admRepository.GetByIdAsync(_userInfo.Id, cancellationToken);
+        var adm = await _admRepository.GetByIdAsync(request.Id, cancellationToken);
 
         if (adm is null)
             return Result.Fail("Admin doesn't exist.");

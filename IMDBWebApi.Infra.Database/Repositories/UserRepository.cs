@@ -5,26 +5,29 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IMDBWebApi.Infra.Database.Repositories
 {
-    public class CommonUserRepository : ICommonUserRepository
+    public class UserRepository : IUserRepository
     {
         private readonly AppDbContext _context;
-        public CommonUserRepository(AppDbContext context)
+        public UserRepository(AppDbContext context)
         {
             _context = context;
         }
 
-        public void Create(CommonUser user) 
+        public void Create(User user) 
             => _context.CommonUsers.Add(user);
 
 
-        public async Task<IEnumerable<CommonUser>> GetAllActive(CancellationToken ct)
+        public async Task<IEnumerable<User>> GetAllActive(CancellationToken ct)
             => await _context.CommonUsers.Where(user => user.IsDeleted == false).ToListAsync(ct);
 
-        public async Task<IEnumerable<CommonUser>> GetAllDisable(CancellationToken ct)
+        public async Task<IEnumerable<User>> GetAllDisable(CancellationToken ct)
             => await _context.CommonUsers.Where(user => user.IsDeleted == true).ToListAsync(ct);
+
+        public async Task<User?> GetByEmail(string email, CancellationToken ct)
+            => await _context.CommonUsers.SingleOrDefaultAsync(user => user.Email == email, ct);
         
 
-        public async Task<CommonUser?> GetByIdAsync(int id, CancellationToken ct)
+        public async Task<User?> GetByIdAsync(int id, CancellationToken ct)
             => await _context.CommonUsers.SingleOrDefaultAsync(user => user.Id == id, ct);
 
         public async Task<bool> IsUniqueEmail(string email, CancellationToken ct)
@@ -33,7 +36,7 @@ namespace IMDBWebApi.Infra.Database.Repositories
         public async Task<bool> IsUniqueUserName(string userName, CancellationToken ct)
             => await _context.CommonUsers.AnyAsync(user => user.UserName!.ToLower() == userName.ToLower(), ct) is false;
 
-        public void Update(CommonUser user)
+        public void Update(User user)
             => _context.CommonUsers.Update(user);
     }
 }
