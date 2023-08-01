@@ -1,4 +1,5 @@
 ﻿using FluentResults;
+using IMDBWebApi.Application.Errors;
 using IMDBWebApi.Application.UserInfo;
 using IMDBWebApi.Domain.Interfaces;
 using IMDBWebApi.Domain.Interfaces.Repositories;
@@ -23,13 +24,7 @@ public class UpdateRegistrationDataAdmCommandHandler : IRequestHandler<UpdateReg
         var adm = await _admRepository.GetByIdAsync(request.Id, cancellationToken);
         
         if (adm is null)
-            return Result.Fail("Admin doesn't exist.");
-
-        if (await _admRepository.IsUniqueUserName(request.UserName, cancellationToken) is false)
-            return Result.Fail("User name is not unique.");
-        
-        if (await _admRepository.IsUniqueEmail(request.Email, cancellationToken) is false)
-            return Result.Fail("Email is not unique.");
+            return Result.Fail(new ApplicationNotFoundError("Admin doesn't exist."));
 
         adm.UpdateRegistrationData(request.Name, request.UserName, request.Email, request.BirthDay);
         _admRepository.Update(adm);

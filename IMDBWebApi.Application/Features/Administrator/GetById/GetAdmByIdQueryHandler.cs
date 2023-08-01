@@ -20,6 +20,6 @@ public class GetAdmByIdQueryHandler : IRequestHandler<GetAdmByIdQuery, Result<Ge
         if (adm is null)
             return Result.Fail("Adm not found");
 
-        return Result.Ok(new GetAdmByIdQueryResponse(adm.Id, adm.Name!, adm.UserName!));
+        return Result.Ok(new GetAdmByIdQueryResponse(adm.Id, adm.Name!, adm.UserName!, adm.IsDeleted));
     }
 }

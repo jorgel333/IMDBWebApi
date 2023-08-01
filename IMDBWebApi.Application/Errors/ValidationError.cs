@@ -1,6 +1,6 @@
 ﻿using FluentResults;
 
-namespace IMDBWebApi.Application.Extension;
+namespace IMDBWebApi.Application.Errors;
 
 public class ValidationError : Error
 {

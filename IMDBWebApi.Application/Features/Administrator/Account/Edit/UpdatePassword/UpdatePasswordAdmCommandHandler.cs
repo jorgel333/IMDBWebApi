@@ -1,6 +1,6 @@
 ﻿using IMDBWebApi.Application.Services.Cryptography;
 using IMDBWebApi.Domain.Interfaces.Repositories;
-using IMDBWebApi.Application.UserInfo;
+using IMDBWebApi.Application.Errors;
 using IMDBWebApi.Domain.Interfaces;
 using FluentResults;
 using MediatR;
@@ -25,11 +25,7 @@ public class UpdatePasswordAdmCommandHandler : IRequestHandler<UpdatePasswordAdm
         var adm = await _admRepository.GetByIdAsync(request.Id, cancellationToken);
 
         if (adm is null)
-            return Result.Fail("Admin doesn't exist.");
-
-        if (request.Password != request.ConfirmPassword)
-            return Result.Fail("Different passwords");
-
+            return Result.Fail(new ApplicationNotFoundError("Admin doesn't exist."));
 
         var salt = _cryptography.CreateSalt();
         var passwordHash = _cryptography.CryptographyPassword(request.Password, salt);

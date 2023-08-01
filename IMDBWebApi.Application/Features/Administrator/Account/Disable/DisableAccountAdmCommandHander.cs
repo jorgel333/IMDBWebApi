@@ -3,6 +3,7 @@ using IMDBWebApi.Application.UserInfo;
 using IMDBWebApi.Domain.Interfaces;
 using FluentResults;
 using MediatR;
+using IMDBWebApi.Application.Errors;
 
 namespace IMDBWebApi.Application.Features.Administrator.Account.Disable;
 
@@ -23,10 +24,10 @@ public class DisableAccountAdmCommandHander : IRequestHandler<DisableAccountAdmC
         var adm = await _admRepository.GetByIdAsync(request.Id, cancellationToken);
 
         if (adm is null)
-            return Result.Fail("Admin doesn't exist.");
+            return Result.Fail(new ApplicationNotFoundError("Admin doesn't exist."));
 
         if (adm.IsDeleted == true)
-            return Result.Fail("Admin already deactivated.");
+            return Result.Fail(new ApplicationError("Admin already deactivated."));
 
         adm.SoftDelete();
         _admRepository.Update(adm);

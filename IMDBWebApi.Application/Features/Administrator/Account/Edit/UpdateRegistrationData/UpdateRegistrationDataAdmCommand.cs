@@ -5,3 +5,5 @@ namespace IMDBWebApi.Application.Features.Administrator.Account.Edit.UpdateRegis
 
 public record UpdateRegistrationDataAdmCommand(int Id, string Name, string UserName, 
     string Email, DateTime BirthDay) : IRequest<Result>;
+public record UpdateRegistrationDataAdmRequest(string Name, string UserName, 
+    string Email, DateTime BirthDay);
