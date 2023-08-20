@@ -1,4 +1,5 @@
 ﻿using FluentResults;
+using IMDBWebApi.Application.Errors;
 using IMDBWebApi.Application.UserInfo;
 using IMDBWebApi.Domain.Interfaces.Repositories;
 using MediatR;
@@ -18,7 +19,7 @@ public class GetAdmByIdQueryHandler : IRequestHandler<GetAdmByIdQuery, Result<Ge
         var adm = await _admRepository.GetByIdAsync(request.Id, cancellationToken);
 
         if (adm is null)
-            return Result.Fail("Adm not found");
+            return Result.Fail(new ApplicationNotFoundError("Adm not found"));
 
         return Result.Ok(new GetAdmByIdQueryResponse(adm.Id, adm.Name!, adm.UserName!, adm.IsDeleted));
     }

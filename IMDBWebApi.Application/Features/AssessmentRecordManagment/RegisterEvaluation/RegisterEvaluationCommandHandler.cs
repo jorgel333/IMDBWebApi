@@ -1,4 +1,5 @@
 ﻿using IMDBWebApi.Domain.Interfaces.Repositories;
+using IMDBWebApi.Application.Errors;
 using IMDBWebApi.Domain.Interfaces;
 using IMDBWebApi.Domain.Entities;
 using FluentResults;
@@ -29,13 +30,13 @@ public class RegisterEvaluationCommandHandler : IRequestHandler<RegisterEvaluati
         var commonUser = await _commonUserRepository.GetByIdAsync(request.CommonUserId, cancellationToken);
 
         if (isUniqueAssessmentRecord is false)
-            return Result.Fail("Assessment already registred.");
+            return Result.Fail(new ApplicationError("Assessment already registred."));
 
         if (movie is null)
-            return Result.Fail("Movie not Found");
+            return Result.Fail(new ApplicationNotFoundError("Movie not Found"));
 
         if (commonUser is null)
-            return Result.Fail("User not found.");
+            return Result.Fail(new ApplicationNotFoundError("User not found."));
 
         var rating = new AssessmentRecord(request.Rate, request.CommonUserId, request.MovieId);
         _assessmentRecordRepository.Create(rating);

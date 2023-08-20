@@ -1,5 +1,5 @@
-using IMDBWebApi.Infra.IoC;
 using IMDBWebApi.Presentation.Extensions;
+using IMDBWebApi.Infra.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddInfraStructure(builder.Configuration);
 builder.Services.AddAuth();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwagger();
 
 var app = builder.Build();
 

@@ -9,16 +9,15 @@ public class CreateAccountAdmCommandValidation : AbstractValidator<CreateAccount
 	public CreateAccountAdmCommandValidation(IAdministratorRepository admRepository)
 	{
 		RuleFor(x => x.Email)
-			.MustAsync(admRepository.IsUniqueEmail)
-            .WithMessage("The email must be unique")
-			.NotEmpty()
-			.EmailAddress()
+			.MustAsync(admRepository.IsUniqueEmail).WithMessage("The email must be unique")
+			.NotEmpty().WithMessage("Email is required")
+			.EmailAddress().WithMessage("Invalid email format")
 			.MaximumLength(256);
 
         RuleFor(x => x.UserName)
-            .MustAsync(admRepository.IsUniqueUserName)
-            .WithMessage("The user name must be unique")
-            .NotEmpty().MinimumLength(4).MaximumLength(36);
+            .MustAsync(admRepository.IsUniqueUserName).WithMessage("The user name must be unique")
+            .NotEmpty().WithMessage("This field cannot be empty")
+            .MinimumLength(4).MaximumLength(36);
 
         RuleFor(x => x.Password)
             .NotEmpty().WithMessage("Password is required.")
@@ -27,7 +26,7 @@ public class CreateAccountAdmCommandValidation : AbstractValidator<CreateAccount
             .WithMessage("Password must contain at least one letter, one number, and one special character.");
 
         RuleFor(x => x.Bithday)
-            .NotEmpty()
+            .NotEmpty().WithMessage("This field cannot be empty")
             .LessThan(DateTime.Now.Date);
 
     }

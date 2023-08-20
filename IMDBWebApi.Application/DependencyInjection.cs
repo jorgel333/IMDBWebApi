@@ -15,6 +15,7 @@ public static class DependencyInjection
         services.AddValidatorsFromAssemblyContaining(typeof(CreateAccountAdmCommandValidation));
         services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
 
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ErrorHandlingBehaviour<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationHandlingBehaviour<,>));
         
         services.AddScoped<ITokenService, TokenService>();

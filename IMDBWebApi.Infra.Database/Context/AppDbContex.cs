@@ -1,4 +1,5 @@
 ﻿using IMDBWebApi.Domain.Entities;
+using IMDBWebApi.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace IMDBWebApi.Infra.Database.Context

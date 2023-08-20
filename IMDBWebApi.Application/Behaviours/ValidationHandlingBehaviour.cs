@@ -1,6 +1,7 @@
-﻿using FluentResults;
+﻿using IMDBWebApi.Application.Extension;
+using IMDBWebApi.Application.Errors;
 using FluentValidation;
-using IMDBWebApi.Application.Extension;
+using FluentResults;
 using MediatR;
 
 namespace IMDBWebApi.Application.Behaviours;

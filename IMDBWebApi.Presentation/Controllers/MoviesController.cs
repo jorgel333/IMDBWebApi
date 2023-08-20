@@ -1,9 +1,9 @@
-﻿using IMDBWebApi.Presentation.PresentationsUtils.ResponseDapter;
+﻿using IMDBWebApi.Application.Features.MoviesManagment.GetMovieDetails;
+using IMDBWebApi.Presentation.PresentationsUtils.ResponseDapter;
 using IMDBWebApi.Application.Features.MoviesManagment.AddMovie;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
-using IMDBWebApi.Application.Features.MoviesManagment.GetMovieDetails;
 
 namespace IMDBWebApi.Presentation.Controllers
 {
@@ -26,8 +26,12 @@ namespace IMDBWebApi.Presentation.Controllers
             return SendResponseService.SendResponse(result);
         }
 
+        
         [HttpPost("create")]
         [Authorize(Roles = "Admin")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IResult> CreateMovie(AddMovieCommand request, CancellationToken cancellationToken)
         {
             var result = await _sender.Send(request, cancellationToken);
