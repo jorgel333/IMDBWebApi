@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace IMDBWebApi.Infra.Database.EntitiesConfiguration
 {
-    public class CastConfiguration : IEntityTypeConfiguration<Cast>
+    public class CastConfiguration : IEntityTypeConfiguration<Casts>
     {
-        public void Configure(EntityTypeBuilder<Cast> builder)
+        public void Configure(EntityTypeBuilder<Casts> builder)
         {
             builder.HasKey(c => c.Id);
 

@@ -3,7 +3,7 @@ using IMDBWebApi.Domain.Validation;
 
 namespace IMDBWebApi.Domain.Entities
 {
-    public sealed class Cast : Entity
+    public sealed class Casts : Entity
     {
         public string? Name { get; private set; }
         public string? Description { get; private set; }
@@ -11,7 +11,7 @@ namespace IMDBWebApi.Domain.Entities
         public IEnumerable<CastActMovies>? ActedMovies { get; set; }
         public IEnumerable<CastDirectMovies>? DirectedMovies { get; set; }
 
-        public Cast(string name, string description, DateTime dateBirth)
+        public Casts(string name, string description, DateTime dateBirth)
         {
             ValidateDomain(name, description, dateBirth);
         }

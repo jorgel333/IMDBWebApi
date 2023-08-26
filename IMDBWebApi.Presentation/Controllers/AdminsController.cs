@@ -22,7 +22,7 @@ namespace IMDBWebApi.Presentation.Controllers
             _sender = sender;
         }
 
-        [HttpGet("{id}", Name = "GetByAdmId")]
+        [HttpGet("{id:int}", Name = "GetByAdmId")]
         public async Task<IResult> GetAdmById(int id, CancellationToken cancellationToken)
         {
             var request = new GetAdmByIdQuery(id);
@@ -37,7 +37,7 @@ namespace IMDBWebApi.Presentation.Controllers
             return SendResponseService.CreatedAtRoute(result, "GetByAdmId", new {id = result.Value.Id}, result.Value);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         public async Task<IResult> DisableAdmAccount(int id, CancellationToken cancellationToken)
         {
             var request = new DisableAccountAdmCommand(id);
@@ -45,7 +45,7 @@ namespace IMDBWebApi.Presentation.Controllers
             return SendResponseService.SendResponse(result);
         }
 
-        [HttpPut("{id}/update-password")]
+        [HttpPut("{id:int}/update-password")]
         public async Task<IResult> UpdatePasswordAdmAccount(int id, UpdatePasswordAdmRequest request, CancellationToken cancellationToken)
         {
             var command = new UpdatePasswordAdmCommand(id, request.Password, request.ConfirmPassword);
@@ -53,7 +53,7 @@ namespace IMDBWebApi.Presentation.Controllers
             return SendResponseService.SendResponse(result);
         }
 
-        [HttpPut("{id}/update-registration-data")]
+        [HttpPut("{id:int}/update-registration-data")]
         public async Task<IResult> UpdateregistrationDataAdmAccount(int id, UpdateRegistrationDataAdmRequest request, CancellationToken cancellationToken)
         {
             var command = new UpdateRegistrationDataAdmCommand(id, request.Name, request.UserName,

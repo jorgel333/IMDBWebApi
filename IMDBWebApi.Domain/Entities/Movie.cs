@@ -1,5 +1,7 @@
 ﻿using IMDBWebApi.Domain.Entities.Abstract;
 using IMDBWebApi.Domain.Validation;
+using Microsoft.VisualBasic;
+using System.Collections.ObjectModel;
 
 namespace IMDBWebApi.Domain.Entities
 {
@@ -13,9 +15,9 @@ namespace IMDBWebApi.Domain.Entities
         public string? Image { get; private set; }
         public DateTime ReleaseDate { get; private set; }
         public IEnumerable<AssessmentRecord>? Assessments { get; set; }
-        public IEnumerable<CastActMovies>? ActorMovies { get; set; }
-        public IEnumerable<CastDirectMovies>? DirectorMovies { get; set; }
-        public IEnumerable<GenreMovies>? GenresMovies { get; set; }
+        public ICollection<CastActMovies>? ActorMovies { get; set; }
+        public ICollection<CastDirectMovies>? DirectorMovies { get; set; }
+        public ICollection<GenreMovies>? GenresMovies { get; set; }
 
         public Movie(string name, string description, int duration, string image, DateTime releaseDate)
         {
@@ -26,7 +28,7 @@ namespace IMDBWebApi.Domain.Entities
             TotalVotes = 0;
         }
         public void Update(string name, string description, int duration, DateTime releaseDate,
-            IEnumerable<GenreMovies> genres, IEnumerable<CastActMovies> castActors, IEnumerable<CastDirectMovies> castDirectors)
+            ICollection<GenreMovies> genres, ICollection<CastActMovies> castActors, ICollection<CastDirectMovies> castDirectors)
         {
             ValidateDomain(name, description, duration);
             ReleaseDate = releaseDate;

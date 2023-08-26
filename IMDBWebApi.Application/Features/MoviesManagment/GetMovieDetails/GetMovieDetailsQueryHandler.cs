@@ -1,6 +1,7 @@
 ﻿using IMDBWebApi.Domain.Interfaces.Repositories;
 using FluentResults;
 using MediatR;
+using IMDBWebApi.Application.Errors;
 
 namespace IMDBWebApi.Application.Features.MoviesManagment.GetMovieDetails;
 
@@ -18,7 +19,7 @@ public class GetMovieDetailsQueryHandler : IRequestHandler<GetMovieDetailsQuery,
         var movie = await _movieRepository.GetDetailsById(request.MovieId, cancellationToken);
 
         if (movie is null)
-            return Result.Fail("Movie not found.");
+            return Result.Fail(new ApplicationNotFoundError("Movie not found."));
 
         var result = new GetMovieDetailsQueryResponse(
             movie.Id, 

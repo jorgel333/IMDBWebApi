@@ -7,6 +7,6 @@ namespace IMDBWebApi.Domain.Entities
         public int MovieActId { get; set; }
         public Movie? MovieAct { get; set; }
         public int CastActId { get; set; }
-        public Cast? CastAct { get; set; }
+        public Casts? CastAct { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using FluentResults;
+using IMDBWebApi.Application.Errors;
 using IMDBWebApi.Domain.Interfaces;
 using IMDBWebApi.Domain.Interfaces.Repositories;
 using MediatR;
@@ -21,7 +22,7 @@ public class DeleteMovieCommandHandler : IRequestHandler<DeleteMovieCommand, Res
         var movie = await _movieRepository.GetById(request.Id, cancellationToken);
 
         if (movie is null)
-            return Result.Fail("Movie not found.");
+            return Result.Fail(new ApplicationNotFoundError("Movie not found."));
 
         _movieRepository.Delete(movie);
         await _unityOfWork.SaveChangesAsync(cancellationToken);

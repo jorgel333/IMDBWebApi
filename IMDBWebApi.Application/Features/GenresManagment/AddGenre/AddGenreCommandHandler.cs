@@ -1,4 +1,5 @@
 ﻿using FluentResults;
+using IMDBWebApi.Application.Errors;
 using IMDBWebApi.Domain.Entities;
 using IMDBWebApi.Domain.Interfaces;
 using IMDBWebApi.Domain.Interfaces.Repositories;
@@ -22,7 +23,7 @@ public class AddGenreCommandHandler : IRequestHandler<AddGenreCommand, Result<Ad
         var isUniqueGenre = await _genreRepository.IsUniqueName(request.Name, cancellationToken);
 
         if (isUniqueGenre is false)
-            return Result.Fail("Genre name is not unique");
+            return Result.Fail(new ApplicationError("Genre name is not unique"));
 
         var newGenre = new Genre(request.Name);
         _genreRepository.Create(newGenre);

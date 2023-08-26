@@ -1,5 +1,4 @@
 ﻿using IMDBWebApi.Application;
-using IMDBWebApi.Application.Services.Cryptography;
 using IMDBWebApi.Infra.Database;
 using IMDBWebApi.Infra.Database.Context;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +14,8 @@ namespace IMDBWebApi.Infra.IoC
         {
             services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("DbConnection"),
-            b => b.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)));
+            b => b.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)
+            .UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)));
 
             services.AddRepositories();
             services.AddUnityOfWork();
