@@ -10,9 +10,9 @@ namespace IMDBWebApi.Infra.Database.EntitiesConfiguration
         {
             builder.HasKey(d => d.Id);
 
-            builder.HasOne(d => d.CastDirector).WithMany(d => d.DirectedMovies).HasForeignKey(d => d.CastDirectorId).OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(d => d.CastDirector).WithMany(d => d.DirectedMovies).HasForeignKey(d => d.CastDirectorId);
 
-            builder.HasOne(d => d.MovieDirect).WithMany(d => d.DirectorMovies).HasForeignKey(d => d.MovieDirectId).OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(d => d.MovieDirect).WithMany(d => d.DirectorMovies).HasForeignKey(d => d.MovieDirectId);
         }
     }
 }

@@ -104,35 +104,6 @@ namespace IMDBWebApi.Infra.Database.Migrations
                     b.ToTable("AssessmentRecords");
                 });
 
-            modelBuilder.Entity("IMDBWebApi.Domain.Entities.Cast", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("DateBirth")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(350)
-                        .HasColumnType("nvarchar(350)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("Casts");
-                });
-
             modelBuilder.Entity("IMDBWebApi.Domain.Entities.CastActMovies", b =>
                 {
                     b.Property<int>("Id")
@@ -179,7 +150,7 @@ namespace IMDBWebApi.Infra.Database.Migrations
                     b.ToTable("CastDirectMovies");
                 });
 
-            modelBuilder.Entity("IMDBWebApi.Domain.Entities.CommonUser", b =>
+            modelBuilder.Entity("IMDBWebApi.Domain.Entities.Casts", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -187,48 +158,25 @@ namespace IMDBWebApi.Infra.Database.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("Birthday")
+                    b.Property<DateTime>("DateBirth")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Email")
+                    b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<byte[]>("PasswordHashSalt")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("varbinary(32)");
-
-                    b.Property<byte[]>("PasswordSalt")
-                        .IsRequired()
-                        .HasMaxLength(12)
-                        .HasColumnType("varbinary(12)");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasMaxLength(24)
-                        .HasColumnType("nvarchar(24)");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
+                    b.HasIndex("Name")
                         .IsUnique();
 
-                    b.HasIndex("UserName")
-                        .IsUnique();
-
-                    b.ToTable("CommonUsers");
+                    b.ToTable("Casts");
                 });
 
             modelBuilder.Entity("IMDBWebApi.Domain.Entities.Genre", b =>
@@ -322,9 +270,61 @@ namespace IMDBWebApi.Infra.Database.Migrations
                     b.ToTable("Movies");
                 });
 
+            modelBuilder.Entity("IMDBWebApi.Domain.Entities.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Birthday")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<byte[]>("PasswordHashSalt")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("varbinary(32)");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .IsRequired()
+                        .HasMaxLength(12)
+                        .HasColumnType("varbinary(12)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(24)
+                        .HasColumnType("nvarchar(24)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("UserName")
+                        .IsUnique();
+
+                    b.ToTable("CommonUsers");
+                });
+
             modelBuilder.Entity("IMDBWebApi.Domain.Entities.AssessmentRecord", b =>
                 {
-                    b.HasOne("IMDBWebApi.Domain.Entities.CommonUser", "CommonUser")
+                    b.HasOne("IMDBWebApi.Domain.Entities.User", "CommonUser")
                         .WithMany("Assessments")
                         .HasForeignKey("CommonUserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -343,7 +343,7 @@ namespace IMDBWebApi.Infra.Database.Migrations
 
             modelBuilder.Entity("IMDBWebApi.Domain.Entities.CastActMovies", b =>
                 {
-                    b.HasOne("IMDBWebApi.Domain.Entities.Cast", "CastAct")
+                    b.HasOne("IMDBWebApi.Domain.Entities.Casts", "CastAct")
                         .WithMany("ActedMovies")
                         .HasForeignKey("CastActId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -352,7 +352,7 @@ namespace IMDBWebApi.Infra.Database.Migrations
                     b.HasOne("IMDBWebApi.Domain.Entities.Movie", "MovieAct")
                         .WithMany("ActorMovies")
                         .HasForeignKey("MovieActId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("CastAct");
@@ -362,7 +362,7 @@ namespace IMDBWebApi.Infra.Database.Migrations
 
             modelBuilder.Entity("IMDBWebApi.Domain.Entities.CastDirectMovies", b =>
                 {
-                    b.HasOne("IMDBWebApi.Domain.Entities.Cast", "CastDirector")
+                    b.HasOne("IMDBWebApi.Domain.Entities.Casts", "CastDirector")
                         .WithMany("DirectedMovies")
                         .HasForeignKey("CastDirectorId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -371,7 +371,7 @@ namespace IMDBWebApi.Infra.Database.Migrations
                     b.HasOne("IMDBWebApi.Domain.Entities.Movie", "MovieDirect")
                         .WithMany("DirectorMovies")
                         .HasForeignKey("MovieDirectId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("CastDirector");
@@ -398,16 +398,11 @@ namespace IMDBWebApi.Infra.Database.Migrations
                     b.Navigation("Movie");
                 });
 
-            modelBuilder.Entity("IMDBWebApi.Domain.Entities.Cast", b =>
+            modelBuilder.Entity("IMDBWebApi.Domain.Entities.Casts", b =>
                 {
                     b.Navigation("ActedMovies");
 
                     b.Navigation("DirectedMovies");
-                });
-
-            modelBuilder.Entity("IMDBWebApi.Domain.Entities.CommonUser", b =>
-                {
-                    b.Navigation("Assessments");
                 });
 
             modelBuilder.Entity("IMDBWebApi.Domain.Entities.Genre", b =>
@@ -424,6 +419,11 @@ namespace IMDBWebApi.Infra.Database.Migrations
                     b.Navigation("DirectorMovies");
 
                     b.Navigation("GenresMovies");
+                });
+
+            modelBuilder.Entity("IMDBWebApi.Domain.Entities.User", b =>
+                {
+                    b.Navigation("Assessments");
                 });
 #pragma warning restore 612, 618
         }

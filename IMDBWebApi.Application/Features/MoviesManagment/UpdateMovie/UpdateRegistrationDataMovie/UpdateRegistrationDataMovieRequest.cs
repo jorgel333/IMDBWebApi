@@ -1,6 +1,6 @@
 ﻿namespace IMDBWebApi.Application.Features.MoviesManagment.UpdateMovie.UpdateRegistrationDataMovie;
 
-public record UpdateRegistrationDataMovieRequest(string Name,
+public record UpdateRegistrationDataMovieRequest(string? Name,
     string Description,
     int Duration,
     DateTime ReleaseDate,

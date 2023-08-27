@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace IMDBWebApi.Infra.Database.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -70,7 +70,7 @@ namespace IMDBWebApi.Infra.Database.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -141,13 +141,13 @@ namespace IMDBWebApi.Infra.Database.Migrations
                         column: x => x.CastActId,
                         principalTable: "Casts",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_CastActMovies_Movies_MovieActId",
                         column: x => x.MovieActId,
                         principalTable: "Movies",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -167,13 +167,13 @@ namespace IMDBWebApi.Infra.Database.Migrations
                         column: x => x.CastDirectorId,
                         principalTable: "Casts",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_CastDirectMovies_Movies_MovieDirectId",
                         column: x => x.MovieDirectId,
                         principalTable: "Movies",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -245,6 +245,12 @@ namespace IMDBWebApi.Infra.Database.Migrations
                 column: "MovieDirectId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Casts_Name",
+                table: "Casts",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CommonUsers_Email",
                 table: "CommonUsers",
                 column: "Email",
@@ -265,6 +271,19 @@ namespace IMDBWebApi.Infra.Database.Migrations
                 name: "IX_GenreMovies_MovieId",
                 table: "GenreMovies",
                 column: "MovieId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Genres_Name",
+                table: "Genres",
+                column: "Name",
+                unique: true,
+                filter: "[Name] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Movies_Name",
+                table: "Movies",
+                column: "Name",
+                unique: true);
         }
 
         /// <inheritdoc />

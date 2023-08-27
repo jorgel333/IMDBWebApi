@@ -2,7 +2,6 @@
 using IMDBWebApi.Domain.Interfaces.Repositories;
 using IMDBWebApi.Infra.Database.Context;
 using Microsoft.EntityFrameworkCore;
-using System.Threading;
 
 namespace IMDBWebApi.Infra.Database.Repositories
 {
@@ -56,11 +55,14 @@ namespace IMDBWebApi.Infra.Database.Repositories
         public async Task<Movie?> GetDetailsById(int id, CancellationToken cancellationToken)
             => await _context.Movies.Include(x => x.GenresMovies!).ThenInclude(g => g.Genre!)
             .Include(x => x.ActorMovies!).ThenInclude(a => a.CastAct!)
-            .Include(x => x.DirectorMovies!).ThenInclude(d => d.CastDirector!).AsSplitQuery()
+            .Include(x => x.DirectorMovies!).ThenInclude(d => d.CastDirector!)
             .SingleOrDefaultAsync(m => m.Id == id, cancellationToken);
 
         public async Task<Movie?> GetById(int id, CancellationToken cancellationToken)
-            => await _context.Movies.Include(x => x.GenresMovies).SingleOrDefaultAsync(m => m.Id == id, cancellationToken);
+            => await _context.Movies.Include(x => x.GenresMovies!)
+            .Include(x => x.ActorMovies!)
+            .Include(x => x.DirectorMovies!)
+            .SingleOrDefaultAsync(m => m.Id == id, cancellationToken);
 
         public async Task<IEnumerable<Movie>> GetTop250(CancellationToken cancellationToken)
              => await _context.Movies
@@ -71,7 +73,11 @@ namespace IMDBWebApi.Infra.Database.Repositories
             .Take(250).ToListAsync(cancellationToken);
 
         public async Task<IEnumerable<Movie>> GetByGenre(int genreId, CancellationToken cancellationToken)
-            => await _context.Movies.Where(g => g.GenresMovies!.Any(g => g.GenreId == genreId))
+            => await _context.Movies
+            .Include(g => g.GenresMovies!).ThenInclude(g => g.Genre)
+            .Include(a => a.ActorMovies!).ThenInclude(a => a.CastAct)
+            .Include(d => d.DirectorMovies!).ThenInclude(d => d.CastDirector)
+            .Where(g => g.GenresMovies!.Any(g => g.GenreId == genreId))
             .ToListAsync(cancellationToken);
         
         public async Task<bool> IsUniqueName(string name, CancellationToken cancellatioToken)
