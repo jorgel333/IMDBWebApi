@@ -63,6 +63,10 @@ namespace IMDBWebApi.Infra.Database.Repositories
             .Include(x => x.ActorMovies!)
             .Include(x => x.DirectorMovies!)
             .SingleOrDefaultAsync(m => m.Id == id, cancellationToken);
+        
+        public async Task<Movie?> GetByIdIncludeAssessment(int id, CancellationToken cancellationToken)
+            => await _context.Movies.Include(x => x.Assessments)
+            .SingleOrDefaultAsync(m => m.Id == id, cancellationToken);
 
         public async Task<IEnumerable<Movie>> GetTop250(CancellationToken cancellationToken)
              => await _context.Movies

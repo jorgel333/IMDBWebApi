@@ -26,7 +26,7 @@ public class RegisterEvaluationCommandHandler : IRequestHandler<RegisterEvaluati
     public async Task<Result<RegisterEvaluationCommandResponse>> Handle(RegisterEvaluationCommand request, CancellationToken cancellationToken)
     {
         var isUniqueAssessmentRecord = await _assessmentRecordRepository.IsUniqueAssessmentRecord(request.CommonUserId, request.MovieId, cancellationToken);
-        var movie = await _movieRepository.GetById(request.MovieId, cancellationToken);
+        var movie = await _movieRepository.GetByIdIncludeAssessment(request.MovieId, cancellationToken);
         var commonUser = await _commonUserRepository.GetByIdAsync(request.CommonUserId, cancellationToken);
 
         if (isUniqueAssessmentRecord is false)

@@ -10,11 +10,16 @@ namespace IMDBWebApi.Application.Features.MoviesManagment.UpdateMovie.UpdateRegi
 public class UpdateRegistrationDataMovieCommandHandler : IRequestHandler<UpdateRegistrationDataMovieCommand, Result>
 {
     private readonly IMovieRepository _movieRepository;
+    private readonly IGenreRepository _genreRepository;
+    private readonly ICastRepository _castRepository;
     private readonly IUnityOfWork _unityOfWork;
 
-    public UpdateRegistrationDataMovieCommandHandler(IMovieRepository movieRepository, IUnityOfWork unityOfWork)
+    public UpdateRegistrationDataMovieCommandHandler(IMovieRepository movieRepository, IGenreRepository genreRepository,
+        ICastRepository castRepository, IUnityOfWork unityOfWork)
     {
         _movieRepository = movieRepository;
+        _genreRepository = genreRepository;
+        _castRepository = castRepository;
         _unityOfWork = unityOfWork;
     }
 
@@ -25,9 +30,19 @@ public class UpdateRegistrationDataMovieCommandHandler : IRequestHandler<UpdateR
         if (movie is null)
             return Result.Fail(new ApplicationNotFoundError("Movie not found."));
 
-        if (await _movieRepository.IsUniqueName(request.Name, cancellationToken) is false)
-            return Result.Fail(new ApplicationError("Name is not unique"));
+        if (movie.Name != request.Name)
+            if (await _movieRepository.IsUniqueName(request.Name, cancellationToken) is false)
+                return Result.Fail(new ApplicationError("Name is not unique"));
 
+        if (await _genreRepository.IsAlreadyRegistred(request.Genres, cancellationToken) is false)
+            return Result.Fail(new ApplicationError("Some genre doesn't exists."));
+
+        if (await _castRepository.IsAlreadyRegistred(request.CastActors, cancellationToken) is false)
+            return Result.Fail(new ApplicationError("Some actor doesn't exists."));
+
+        if (await _castRepository.IsAlreadyRegistred(request.CastDirectors, cancellationToken) is false)
+            return Result.Fail(new ApplicationError("Some director doesn't exists."));
+        
         var genresMovies = request.Genres.Select(genre => new GenreMovies { GenreId = genre }).ToList();
 
         var actorMovies = request.CastActors.Select(cast => new CastActMovies { CastActId = cast }).ToList();

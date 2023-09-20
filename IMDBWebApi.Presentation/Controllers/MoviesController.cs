@@ -1,15 +1,14 @@
-﻿using IMDBWebApi.Application.Features.MoviesManagment.GetMovieDetails;
-using IMDBWebApi.Presentation.PresentationsUtils.ResponseDapter;
-using IMDBWebApi.Application.Features.MoviesManagment.AddMovie;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using MediatR;
+﻿using IMDBWebApi.Application.Features.MoviesManagment.UpdateMovie.UpdateRegistrationDataMovie;
+using IMDBWebApi.Application.Features.MoviesManagment.GetMovieDetails;
 using IMDBWebApi.Application.Features.MoviesManagment.GetNextReleases;
 using IMDBWebApi.Application.Features.MoviesManagment.GetTop250Movies;
-using IMDBWebApi.Application.Features.Administrator.Account.Edit.UpdateRegistrationData;
-using IMDBWebApi.Application.Features.MoviesManagment.UpdateMovie.UpdateRegistrationDataMovie;
 using IMDBWebApi.Application.Features.MoviesManagment.GetMovieByGenre;
 using IMDBWebApi.Application.Features.MoviesManagment.DeleteMovie;
+using IMDBWebApi.Presentation.PresentationsUtils.ResponseDapter;
+using IMDBWebApi.Application.Features.MoviesManagment.AddMovie;
+using Microsoft.AspNetCore.Mvc;
+using MediatR;
+using IMDBWebApi.Application.Features.AssessmentRecordManagment.RegisterEvaluation;
 
 namespace IMDBWebApi.Presentation.Controllers
 {
@@ -71,10 +70,17 @@ namespace IMDBWebApi.Presentation.Controllers
             return SendResponseService.SendResponse(result);
         }
 
+        [HttpPost("rating")]
+        public async Task<IResult> Rating(RegisterEvaluationCommand request, CancellationToken cancellationToken)
+        {
+            var result = await _sender.Send(request, cancellationToken);
+            return SendResponseService.SendResponse(result);
+        }
+
         [HttpPut("{id:int}")]
         public async Task<IResult> UpdateMovie(int id, UpdateRegistrationDataMovieRequest request, CancellationToken cancellationToken)
         {
-            var command = new UpdateRegistrationDataMovieCommand(id, request.Name, request.Description, request.Duration,
+            var command = new UpdateRegistrationDataMovieCommand(id, request.Name!, request.Description, request.Duration,
                 request.ReleaseDate, request.Genres, request.CastActors, request.CastDirectors);
             var result = await _sender.Send(command, cancellationToken);
             return SendResponseService.SendResponse(result);

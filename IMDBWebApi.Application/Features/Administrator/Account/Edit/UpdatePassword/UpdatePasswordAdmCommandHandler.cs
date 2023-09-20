@@ -25,7 +25,7 @@ public class UpdatePasswordAdmCommandHandler : IRequestHandler<UpdatePasswordAdm
         var adm = await _admRepository.GetByIdAsync(request.Id, cancellationToken);
 
         if (adm is null)
-            return Result.Fail(new ApplicationNotFoundError("Admin doesn't exist."));
+            return Result.Fail(new ApplicationNotFoundError("Admin not found."));
 
         var salt = _cryptography.CreateSalt();
         var passwordHash = _cryptography.CryptographyPassword(request.Password, salt);
