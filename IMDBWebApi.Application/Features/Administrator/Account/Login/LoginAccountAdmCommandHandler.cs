@@ -30,9 +30,10 @@ public class LoginAccountAdmCommandHandler : IRequestHandler<LoginAccountAdmComm
 
         if (admEmail.IsDeleted == true)
             return Result.Fail(new ApplicationError("Admin disable."));
-
-        if (_cryptography.VerifyPassword(admEmail.PasswordHashSalt!, 
-            admEmail.PasswordSalt!, request.Password) is false)
+        
+        var verifyPassword = _cryptography.VerifyPassword(admEmail.PasswordHashSalt!, admEmail.PasswordSalt!, request.Password);
+        
+        if (verifyPassword is false)
             return Result.Fail(new ApplicationError("Invalid email or password."));
 
         var token = _tokenService.GenerateToken(admEmail);

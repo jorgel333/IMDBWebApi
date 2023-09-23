@@ -32,7 +32,6 @@ namespace IMDBWebApi.Presentation.Extensions
                 };
             });
 
-            services.AddAuthorization();
             return services;
         }
     }

@@ -23,8 +23,6 @@ public static class SwaggerExtension
             var xmlPatch = Path.Combine(AppContext.BaseDirectory, xmlFile);
             c.IncludeXmlComments(xmlPatch);
 
-            c.OperationFilter<BearerAthenticationFilter>();
-
             c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
             {
                 Name = "Authorization",
@@ -34,8 +32,21 @@ public static class SwaggerExtension
                 In = ParameterLocation.Header,
                 Description = "Informe seu Token."
             });
-            
-        }) ;
+
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    }, new string []{}
+                }
+            });
+        });
 
         return services;
     }

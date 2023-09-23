@@ -1,7 +1,5 @@
 ﻿using IMDBWebApi.Domain.Entities.Abstract;
 using IMDBWebApi.Domain.Validation;
-using Microsoft.VisualBasic;
-using System.Collections.ObjectModel;
 
 namespace IMDBWebApi.Domain.Entities
 {
@@ -38,7 +36,7 @@ namespace IMDBWebApi.Domain.Entities
         }
         public void AttRatingAverage()
         {
-            TotalVotes++;
+            TotalVotes = Assessments!.Count();
             RatingAverage = Assessments!.Select(x => x.Rate).Average();
         }
         private void ValidateDomain(string name, string description, int duration)

@@ -1,10 +1,10 @@
-﻿using IMDBWebApi.Application.Services.Cryptography;
+﻿using IMDBWebApi.Application.Features.Administrator.Account.Create;
+using IMDBWebApi.Application.Services.Cryptography;
 using Microsoft.Extensions.DependencyInjection;
 using IMDBWebApi.Application.Services.Token;
 using IMDBWebApi.Application.Behaviours;
 using MediatR;
 using FluentValidation;
-using IMDBWebApi.Application.Features.Administrator.Account.Create;
 
 namespace IMDBWebApi.Application;
 
