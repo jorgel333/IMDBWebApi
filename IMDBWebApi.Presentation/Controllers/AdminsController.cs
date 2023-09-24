@@ -45,7 +45,7 @@ namespace IMDBWebApi.Presentation.Controllers
             return SendResponseService.SendResponse(result);
         }
 
-        
+        [Authorize(Roles = "admin")]
         [HttpPut("{id:int}/update-password")]
         public async Task<IResult> UpdatePasswordAdmAccount(int id, UpdatePasswordAdmRequest request, CancellationToken cancellationToken)
         {

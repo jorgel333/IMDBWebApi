@@ -9,17 +9,11 @@ namespace IMDBWebApi.Application.Services.Token;
 public class TokenService : ITokenService
 {
     private readonly byte[] key;
-    private readonly IEnumerable<TokenValidationParameters> _validationParameters;
 
-    public TokenService(IOptions<TokenServiceOptions> options, 
-        IEnumerable<TokenValidationParameters> validationParameters)
+    public TokenService(IOptions<TokenServiceOptions> options)
     {
         key = options.Value.Key;
-        _validationParameters = validationParameters.Select(tv =>
-        {
-            tv.IssuerSigningKey = new SymmetricSecurityKey(key);
-            return tv;
-        });
+        
     }
     public string GenerateToken(Account account)
     {
@@ -30,12 +24,11 @@ public class TokenService : ITokenService
             Subject = new ClaimsIdentity(new Claim[]
             {
                 new Claim(ClaimTypes.Name, account.UserName!),
-                new Claim(ClaimTypes.Role, account.GetType().Name),
+                new Claim(ClaimTypes.Role, account.GetType().Name.ToLower()),
                 new Claim(ClaimTypes.NameIdentifier, account.Id.ToString())
             }),
-            Expires = DateTime.UtcNow.AddHours(1),
-            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
-            SecurityAlgorithms.HmacSha256Signature)
+            Expires = DateTime.UtcNow.AddHours(8),
+            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),  SecurityAlgorithms.HmacSha256)
         };
 
         var token = tokenHandler.CreateToken(tokenDescriptor);

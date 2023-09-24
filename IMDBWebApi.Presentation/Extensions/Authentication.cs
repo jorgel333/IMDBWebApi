@@ -9,7 +9,7 @@ namespace IMDBWebApi.Presentation.Extensions
     {
         public static IServiceCollection AddAuth(this IServiceCollection services)
         {
-            var key = Encoding.ASCII.GetBytes("m430f8$dao9o12usako0dj4a103@sa4$sakf093na234vwz6sdf");
+            var key = Encoding.UTF8.GetBytes("m430f8$dao9o12usako0dj4a103@sa4$sakf093na234vwz6sdf");
             services.Configure<TokenServiceOptions>(opt =>
             {
                 opt.Key = key;

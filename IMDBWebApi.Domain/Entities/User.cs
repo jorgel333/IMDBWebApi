@@ -8,11 +8,10 @@ namespace IMDBWebApi.Domain.Entities
             byte[] passwordSalt, DateTime birthday) : 
             base(name, userName, email, passwordHashSalt, passwordSalt, birthday)
         {
+            IsDeleted = false;
         }
 
         public IEnumerable<AssessmentRecord>? Assessments { get; set; }
-
-        
         
     }
 }

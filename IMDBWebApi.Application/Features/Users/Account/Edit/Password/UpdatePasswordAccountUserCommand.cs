@@ -4,3 +4,5 @@ using MediatR;
 namespace IMDBWebApi.Application.Features.Users.Account.Edit.Password;
 
 public record UpdatePasswordAccountUserCommand(int Id, string Password, string ConfirmPassword) : IRequest<Result>;
+
+public record UpdatePasswordAccountUserRequest(string Password, string ConfirmPassword);

@@ -26,7 +26,7 @@ public class ErrorHandlingBehaviour<TRequest, TResponse> : IPipelineBehavior<TRe
         catch(Exception ex)
         {
             _logger.LogError(ex, "Unknow Error");
-            return Result.Fail(new Error("Unknow Error")).To<TResponse>();
+            return Result.Fail(new Error("Unknowwww Error")).To<TResponse>();
         }
     }
 }

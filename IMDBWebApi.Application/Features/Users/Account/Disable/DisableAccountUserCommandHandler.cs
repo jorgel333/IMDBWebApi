@@ -25,10 +25,9 @@ public class DisableAccountUserCommandHandler : IRequestHandler<DisableAccountUs
             return Result.Fail(new ApplicationNotFoundError("User not found"));
 
         if (user.IsDeleted == true)
-            return Result.Fail(new ApplicationError("User already deactivated."));
+            return Result.Fail(new ApplicationError("User alread dedsact"));
 
         user.SoftDelete();
-        
         _userRepository.Update(user);
         await _unityOfWork.SaveChangesAsync(cancellationToken);
 
