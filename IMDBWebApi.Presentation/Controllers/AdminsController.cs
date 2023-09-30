@@ -21,7 +21,7 @@ namespace IMDBWebApi.Presentation.Controllers
         {
             _sender = sender;
         }
-
+        [Authorize(Roles = "admin")]
         [HttpGet("{id:int}", Name = "GetByAdmId")]
         public async Task<IResult> GetAdmById(int id, CancellationToken cancellationToken)
         {

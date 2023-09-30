@@ -19,7 +19,7 @@ public static class SwaggerExtension
                 }
             });
             
-            var xmlFile = "IMDBWebApi.xml";
+            var xmlFile = "IMDBWebApi.Presentation.xml";
             var xmlPatch = Path.Combine(AppContext.BaseDirectory, xmlFile);
             c.IncludeXmlComments(xmlPatch);
 

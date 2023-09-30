@@ -38,8 +38,7 @@ public class LoginAccountUserCommandHandler : IRequestHandler<LoginAccountUserCo
             return Result.Fail(new ApplicationError("Invalid email or password."));
 
         var token = _tokenService.GenerateToken(userEmail);
-        var refreshToken = _tokenService.GenerateRefreshToken();
 
-        return Result.Ok(new LoginAccountUserCommandResponse(token, refreshToken));
+        return Result.Ok(new LoginAccountUserCommandResponse(token));
     }
 }

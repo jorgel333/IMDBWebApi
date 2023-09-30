@@ -37,8 +37,7 @@ public class LoginAccountAdmCommandHandler : IRequestHandler<LoginAccountAdmComm
             return Result.Fail(new ApplicationError("Invalid email or password."));
 
         var token = _tokenService.GenerateToken(admEmail);
-        var refreshToken = _tokenService.GenerateRefreshToken();
 
-        return Result.Ok(new LoginAccountAdmCommandResponse(token, refreshToken));
+        return Result.Ok(new LoginAccountAdmCommandResponse(token));
     }
 }

@@ -10,9 +10,9 @@ namespace IMDBWebApi.Presentation.Extensions
         public static IServiceCollection AddAuth(this IServiceCollection services)
         {
             var key = Encoding.UTF8.GetBytes("m430f8$dao9o12usako0dj4a103@sa4$sakf093na234vwz6sdf");
-            services.Configure<TokenServiceOptions>(opt =>
+            services.Configure<JwtOptions>(opt =>
             {
-                opt.Key = key;
+                opt.SecretKey = key;
             });
 
             services.AddAuthentication(x =>
@@ -28,10 +28,11 @@ namespace IMDBWebApi.Presentation.Extensions
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = false,
-                    ValidateAudience = false
+                    ValidateAudience = false,
                 };
             });
-
+            
+            services.AddAuthorization();
             return services;
         }
     }

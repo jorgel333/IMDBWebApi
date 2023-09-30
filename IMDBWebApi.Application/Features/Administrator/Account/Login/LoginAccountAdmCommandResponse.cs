@@ -1,5 +1,5 @@
 ﻿
 namespace IMDBWebApi.Application.Features.Administrator.Account.Login;
 
-public record LoginAccountAdmCommandResponse(string Token, string RefreshToken);
+public record LoginAccountAdmCommandResponse(string Token);
  
